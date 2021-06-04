@@ -1,16 +1,7 @@
-//
-//  AppDelegate.swift
-//  TestAppForAbramov
-//
-//  Created by Антон Бушманов on 02.06.2021.
-//
-
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

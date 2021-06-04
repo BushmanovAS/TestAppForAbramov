@@ -8,11 +8,4 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-    
-    override class func awakeFromNib() {
-        super .awakeFromNib()
-        
-        
-    }
-    
 }
