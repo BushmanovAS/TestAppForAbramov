@@ -1,23 +1,99 @@
-//
-//  TableViewCell.swift
-//  TestAppForAbramov
-//
-//  Created by Антон Бушманов on 02.06.2021.
-//
-
 import UIKit
 
-class TableViewCell: UITableViewCell {
+protocol CollectionViewDelegate {
+    func transferToColorVc(backgroundColor: UIColor)
+}
 
+class TableViewCell: UITableViewCell {
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    var cellsCount = [4, 6, 8, 10]
+    var id = 0
+    var number = 4
+    var delegate: CollectionViewDelegate?
+    var colorForVc: UIColor = UIColor.black
+    var titleForVc: String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+extension TableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        switch id {
+        case 0: return 4
+        default: return 4 + 2 * id
+        }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! CollectionViewCell
+//        colorForVc = cell.contentView.backgroundColor!
+        delegate?.transferToColorVc(backgroundColor: UIColor.red)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! CollectionViewCell
+        cell.layer.cornerRadius = 20
+        
+        switch id {
+        case 0:
+            var numbers: [Double] = [0]
+            var b = 0.0
+            
+            for _ in 0..<4 {
+                let a: Double = 1.0 / 3.0
+                b = b + a
+                numbers.append(b)
+            }
+            
+            cell.contentView.backgroundColor = UIColor(red: CGFloat(1 - numbers[indexPath.row]), green: 0, blue: 0, alpha: 1)
+            
+        case 1:
+            var numbers: [Double] = [0]
+            var b = 0.0
 
+            for _ in 0..<(4 + (2 * id)) {
+                let a: Double = 1.0 / Double(3 + (2 * id))
+                b = b + a
+                numbers.append(b)
+            }
+
+            cell.contentView.backgroundColor = UIColor(red: 0, green: CGFloat(1 - numbers[indexPath.row]), blue: 0, alpha: 1)
+            
+        case 2:
+            var numbers: [Double] = [0]
+            var b = 0.0
+
+            for _ in 0..<(4 + (2 * id)) {
+                let a: Double = 1.0 / Double(4 + (2 * id))
+                b = b + a
+                numbers.append(b)
+            }
+
+            cell.contentView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(1 - numbers[indexPath.row]), alpha: 1)
+            
+        case 3:
+            var numbers: [Double] = [0]
+            var b = 0.0
+
+            for _ in 0..<(4 + (2 * id)) {
+                let a: Double = 1.0 / Double(4 + (2 * id))
+                b = b + a
+                numbers.append(b)
+            }
+
+            cell.contentView.backgroundColor = UIColor(red: CGFloat(1 - numbers[indexPath.row]), green: CGFloat(0.75 - numbers[indexPath.row]), blue: CGFloat(0.5 - numbers[indexPath.row]), alpha: 1)
+            
+        default:
+            cell.contentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        
+        return cell
+    }
 }
