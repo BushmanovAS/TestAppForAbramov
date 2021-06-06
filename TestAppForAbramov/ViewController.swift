@@ -10,11 +10,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let textColor = UIColor(named: "TextColor") else { return }
+        if let textColor = UIColor(named: "TextColor") {
+            navigationController?.navigationBar.tintColor = textColor
+        } else {
+            print("Цвет текста не найден")
+        }
         
         tableView.rowHeight = 200
         button.layer.cornerRadius = button.frame.height / 5
-        navigationController?.navigationBar.tintColor = textColor
+        
     }
 }
 
